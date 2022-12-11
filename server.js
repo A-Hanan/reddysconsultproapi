@@ -16,9 +16,10 @@ const server = require("http").Server(app);
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://consult-pro-application.vercel.app/",
+    origin: "*",
   },
 });
+console.log();
 
 // const app = express();
 // const server = require("http").Server(app);
