@@ -40,7 +40,8 @@ router.post("/send-verify-email", (req, res) => {
 
   const { _id, email, firstName, lastName } = req.body;
   console.log("request body", req.body);
-  const currentUrl = "http://localhost:3000/";
+  // const currentUrl = "http://localhost:3000/";
+  const currentUrl = "https://consult-pro-application.vercel.app/";
 
   const uniqueString = uuidv4() + _id;
 
@@ -185,7 +186,8 @@ router.post("/send-change-password-link", (req, res) => {
   console.log("sending verification email", req.body);
 
   const { email, id } = req.body;
-  const currentUrl = "http://localhost:3000/";
+  // const currentUrl = "http://localhost:3000/";
+  const currentUrl = " https://consult-pro-application.vercel.app/";
 
   const uniqueString = uuidv4() + id;
 
@@ -224,6 +226,7 @@ router.post("/send-change-password-link", (req, res) => {
               //email sent and verification record saved
               console.log("have sent recovery email to ", mailOptions);
               res.status(200).send("recovery email sent successfully");
+              console.log();
             })
             .catch((err) => {
               console.log(err);

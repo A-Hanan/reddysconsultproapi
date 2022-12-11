@@ -1,10 +1,10 @@
-const io = require("socket.io")(8990, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+// const io = require("socket.io")(8990, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//   },
+// });
 
-const runSocketServer = () => {
+const runSocketServer = (io) => {
   console.log("running socket server");
 
   let users = [];
