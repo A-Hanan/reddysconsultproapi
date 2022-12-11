@@ -9,11 +9,15 @@ const bodyParser = require("body-parser");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+// const { Server } = require("socket.io");
+// const io = new Server(server);
 
-runSocketServer(io);
-connectToMongo();
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "https://consult-pro-application.vercel.app/",
+    methods: ["GET", "POST"],
+  },
+});
 
 // const app = express();
 // const server = require("http").Server(app);
@@ -25,6 +29,9 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); //for form post requests
 app.use(express.static(`${__dirname}/public`));
+
+runSocketServer(io);
+connectToMongo();
 
 // Avaliable routes
 app.use(express.json());
