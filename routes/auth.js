@@ -666,4 +666,53 @@ router.post("/send-query-email", (req, res) => {
     });
 });
 
+//send booked appointment us email
+router.post("/send-booked-appointment-success-email", (req, res) => {
+  console.log("sending booked appointment  email");
+
+  const { appointment } = req.body;
+  if (!appointment) {
+    res.status(400).send("incorrect credential");
+  }
+  console.log("request body", req.body);
+
+  const mailOptions = {
+    from: process.env.AUTH_EMAIL,
+    to: appointment?.user?.email,
+    subject: "Appointment Booked Successfully !",
+    html: `
+    <h1 style="font-weight:400;">Hey ${
+      appointment?.user?.firstName + " " + appointment?.user?.lastName
+    }, Your appointment with ${appointment?.expert?.name} has 
+    been booked successfully.
+    </h1>
+    <h3 style="font-size:17px;">Appointment Title : ${appointment?.title}</h3>
+    <h3 style="font-size:17px;">Expert Name       : ${
+      appointment?.expert?.name
+    }</h3>
+    <h3 style="font-size:17px;">Appointment Date  : ${
+      appointment?.appointmentDate
+    }.</h3>
+    <h3 style="font-size:17px;">Appointment Time  : ${
+      appointment?.appointmentTime
+    }.</h3>
+    <h4 style="font-size:20px;">Regards: ConsultPro Team</h4>
+      `,
+  };
+  //hash the uniqueString4
+  console.log("sending booking success mail 2");
+
+  transporter
+    .sendMail(mailOptions)
+    .then(() => {
+      //email sent and verification record saved
+      console.log("booking success mail sent successfully");
+      res.status(200).send("booking success email sent successfully");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("booking success email sending failed");
+    });
+});
+
 module.exports = router;
