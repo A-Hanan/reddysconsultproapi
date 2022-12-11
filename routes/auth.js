@@ -681,11 +681,11 @@ router.post("/send-booked-appointment-success-email", (req, res) => {
     to: appointment?.user?.email,
     subject: "Appointment Booked Successfully !",
     html: `
-    <h1 style="font-weight:400;">Hey ${
+    <h4 style="font-size:20px;">Hey ${
       appointment?.user?.firstName + " " + appointment?.user?.lastName
     }, Your appointment with ${appointment?.expert?.name} has 
     been booked successfully.
-    </h1>
+    </h4>
     <h3 style="font-size:17px;">Appointment Title : ${appointment?.title}</h3>
     <h3 style="font-size:17px;">Expert Name       : ${
       appointment?.expert?.name
@@ -696,7 +696,7 @@ router.post("/send-booked-appointment-success-email", (req, res) => {
     <h3 style="font-size:17px;">Appointment Time  : ${
       appointment?.appointmentTime
     }.</h3>
-    <h4 style="font-size:20px;">Regards: ConsultPro Team</h4>
+    <p>Regards: ConsultPro Team</p>
       `,
   };
   //hash the uniqueString4
