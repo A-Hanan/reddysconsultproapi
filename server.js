@@ -7,15 +7,16 @@ var cors = require("cors");
 const bodyParser = require("body-parser");
 
 const app = express();
-const http = require("http");
-const server = http.createServer(app);
+// const http = require("http");
+// const server = http.createServer(app);
 // const { Server } = require("socket.io");
 // const io = new Server(server);
+
+const server = require("http").Server(app);
 
 const io = require("socket.io")(server, {
   cors: {
     origin: "https://consult-pro-application.vercel.app/",
-    methods: ["GET", "POST"],
   },
 });
 
