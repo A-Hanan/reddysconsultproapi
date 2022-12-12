@@ -57,20 +57,24 @@ const runSocketServer = (io) => {
       // console.log("call ended");
     });
     // console.log("here call user runs");
-    socket.on("callUser", ({ userToCall, signalData, from, name }) => {
-      // console.log("users active while calling>>> ", users);
-      // console.log("running call user");
-      const fromUser = getUserBySocketId(from);
-      const user = getUser(userToCall);
-      // console.log("calling ", userToCall, user?.socketId);
-      io.to(user?.socketId).emit("callUser", {
-        signal: signalData,
-        from: fromUser?.userId,
-        name,
-      });
-      // console.log("users>>", users);
-      // console.log("call user emitting>>> name>", name, "from>", from);
-    });
+    socket.on(
+      "callUser",
+      ({ userToCall, signalData, from, name, appointmentId }) => {
+        // console.log("users active while calling>>> ", users);
+        // console.log("running call user");
+        const fromUser = getUserBySocketId(from);
+        const user = getUser(userToCall);
+        // console.log("calling ", userToCall, user?.socketId);
+        io.to(user?.socketId).emit("callUser", {
+          signal: signalData,
+          from: fromUser?.userId,
+          name,
+          appointmentId,
+        });
+        // console.log("users>>", users);
+        // console.log("call user emitting>>> name>", name, "from>", from);
+      }
+    );
 
     socket.on("answerCall", (data) => {
       // console.log("data at answer call", data);
