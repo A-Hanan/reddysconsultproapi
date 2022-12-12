@@ -59,7 +59,7 @@ const runSocketServer = (io) => {
     // console.log("here call user runs");
     socket.on(
       "callUser",
-      ({ userToCall, signalData, from, name, appointmentId }) => {
+      ({ userToCall, signalData, from, name, appointmentId, receiverId }) => {
         // console.log("users active while calling>>> ", users);
         // console.log("running call user");
         const fromUser = getUserBySocketId(from);
@@ -70,6 +70,7 @@ const runSocketServer = (io) => {
           from: fromUser?.userId,
           name,
           appointmentId,
+          receiverId,
         });
         // console.log("users>>", users);
         // console.log("call user emitting>>> name>", name, "from>", from);
