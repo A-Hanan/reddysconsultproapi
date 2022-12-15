@@ -699,7 +699,7 @@ router.post("/send-booked-appointment-success-email", (req, res) => {
       currentUrl + "video-chat/" + appointment._id
     }><button style="padding:8px 20px;background-color:#006;border:none;
     cursor:pointer;
-    color:white;fontSize:23px;">Recover Your Account</button></a>
+    color:white;fontSize:23px;">Attend Appointment</button></a>
     <p>Regards: ConsultPro Team</p>
       `,
   };
