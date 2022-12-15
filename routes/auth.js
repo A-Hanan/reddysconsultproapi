@@ -668,6 +668,7 @@ router.post("/send-query-email", (req, res) => {
 //send booked appointment us email
 router.post("/send-booked-appointment-success-email", (req, res) => {
   console.log("sending booked appointment  email");
+  const currentUrl = " https://consult-pro-application.vercel.app/";
 
   const { appointment } = req.body;
   if (!appointment) {
