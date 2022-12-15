@@ -1,7 +1,5 @@
 const router = require("express").Router();
 const { Appointment } = require("../models/Appointment");
-// const fetchuser = require("../middleware/fetchuser");
-// create a new appointment in the database
 
 router.post("/", async (req, res) => {
   try {

@@ -8,7 +8,6 @@ const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
-// const fetchuser = require("../middleware/fetchuser");
 const CryptoJS = require("crypto-js");
 var path = require("path");
 
@@ -696,6 +695,11 @@ router.post("/send-booked-appointment-success-email", (req, res) => {
     <h3 style="font-size:17px;">Appointment Time  : ${
       appointment?.appointmentTime
     }.</h3>
+    <a href=${
+      currentUrl + "video-chat/" + appointment._id
+    }><button style="padding:8px 20px;background-color:#006;border:none;
+    cursor:pointer;
+    color:white;fontSize:23px;">Recover Your Account</button></a>
     <p>Regards: ConsultPro Team</p>
       `,
   };
