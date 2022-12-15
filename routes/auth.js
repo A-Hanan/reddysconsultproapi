@@ -696,7 +696,7 @@ router.post("/send-booked-appointment-success-email", (req, res) => {
       appointment?.appointmentTime
     }.</h3>
     <a href=${
-      currentUrl + "video-chat/" + appointment._id
+      currentUrl + "video-chat/" + appointment?._id
     }><button style="padding:8px 20px;background-color:#006;border:none;
     cursor:pointer;
     color:white;fontSize:23px;">Attend Appointment</button></a>
