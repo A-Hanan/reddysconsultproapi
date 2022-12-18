@@ -37,7 +37,7 @@ const appointmentSchema = mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
+      default: "N/A",
     },
     isSeen: {
       type: Boolean,

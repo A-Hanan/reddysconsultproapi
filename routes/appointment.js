@@ -8,8 +8,8 @@ router.post("/", async (req, res) => {
     // console.log("body of appointment:", appointment);
     return res.status(200).json(appointment);
   } catch (err) {
-    console.log(err.message);
-    return res.status(500).send(err.message);
+    console.log(err);
+    return res.status(500).send(err);
   }
 });
 //get appointment for specific doctor with specific Id
@@ -235,7 +235,7 @@ router.get("/ongoing/:userId/:userType", async (req, res) => {
   // let appointments = await Appointment.find();
 
   //console.log("attended appointments>", appointments);
-  if (appointments.length > 0) {
+  if (appointments?.length > 0) {
     res.status(200).json(appointments);
   } else {
     res.status(400).json({ success: "failed" });

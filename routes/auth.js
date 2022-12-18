@@ -39,8 +39,8 @@ router.post("/send-verify-email", (req, res) => {
 
   const { _id, email, firstName, lastName } = req.body;
   console.log("request body", req.body);
-  // const currentUrl = "http://localhost:3000/";
-  const currentUrl = "https://consult-pro-application.vercel.app/";
+  const currentUrl = process.env.CLIENT_URL || "http://localhost:3000/";
+  // const currentUrl = "https://consult-pro-application.vercel.app/";
 
   const uniqueString = uuidv4() + _id;
 
@@ -185,8 +185,8 @@ router.post("/send-change-password-link", (req, res) => {
   console.log("sending verification email", req.body);
 
   const { email, id } = req.body;
-  // const currentUrl = "http://localhost:3000/";
-  const currentUrl = " https://consult-pro-application.vercel.app/";
+  const currentUrl = process.env.CLIENT_URL || "http://localhost:3000/";
+  // const currentUrl = "https://consult-pro-application.vercel.app/";
 
   const uniqueString = uuidv4() + id;
 
@@ -223,7 +223,7 @@ router.post("/send-change-password-link", (req, res) => {
             .sendMail(mailOptions)
             .then(() => {
               //email sent and verification record saved
-              console.log("have sent recovery email to ", mailOptions);
+              console.log("have sent recovery email to ", email);
               res.status(200).send("recovery email sent successfully");
               console.log();
             })
@@ -668,13 +668,14 @@ router.post("/send-query-email", (req, res) => {
 //send booked appointment us email
 router.post("/send-booked-appointment-success-email", (req, res) => {
   console.log("sending booked appointment  email");
-  const currentUrl = " https://consult-pro-application.vercel.app/";
+  // const currentUrl = " https://consult-pro-application.vercel.app/";
+  const currentUrl = process.env.CLIENT_URL || "http://localhost:3000/";
 
   const { appointment } = req.body;
   if (!appointment) {
     res.status(400).send("incorrect credential");
   }
-  console.log("request body", req.body);
+  // console.log("request body", req.body);
 
   const mailOptions = {
     from: process.env.AUTH_EMAIL,
@@ -717,6 +718,62 @@ router.post("/send-booked-appointment-success-email", (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(500).send("booking success email sending failed");
+    });
+});
+
+//ask for payment to confirm appointent
+router.post("/send-pay-and-confirm-email", (req, res) => {
+  console.log("sending confirm payy");
+  // const currentUrl = " https://consult-pro-application.vercel.app/";
+  const currentUrl = process.env.CLIENT_URL || "http://localhost:3000/";
+
+  const { appointment } = req.body;
+  if (!appointment) {
+    res.status(400).send("incorrect credential");
+  }
+  // console.log("request body", req.body);
+
+  const mailOptions = {
+    from: process.env.AUTH_EMAIL,
+    to: appointment?.user?.email,
+    subject: "Appointment registered, Pay to confirm !",
+    html: `
+    <h4 style="font-size:20px;">Hey ${
+      appointment?.user?.firstName + " " + appointment?.user?.lastName
+    }, Your appointment with ${appointment?.expert?.name} has 
+    been registered successfully.
+    </h4>
+    <h3 style="font-size:17px;">Appointment Title : ${appointment?.title}</h3>
+    <h3 style="font-size:17px;">Expert Name       : ${
+      appointment?.expert?.name
+    }</h3>
+    <h3 style="font-size:17px;">Appointment Date  : ${
+      appointment?.appointmentDate
+    }.</h3>
+    <h3 style="font-size:17px;">Appointment Time  : ${
+      appointment?.appointmentTime
+    }.</h3>
+    <a href=${
+      currentUrl + "pending-appointments"
+    }><button style="padding:8px 20px;background-color:#006;border:none;
+    cursor:pointer;
+    color:white;fontSize:23px;">Pay & Confirm</button></a>
+    <p>Regards: ConsultPro Team</p>
+      `,
+  };
+  //hash the uniqueString4
+  console.log("sending payment successs success mail 2");
+
+  transporter
+    .sendMail(mailOptions)
+    .then(() => {
+      //email sent and verification record saved
+      console.log("booking payment mail sent successfully");
+      res.status(200).send("booking success email sent successfully");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("booking paymneent email sending failed");
     });
 });
 
